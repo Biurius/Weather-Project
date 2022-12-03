@@ -86,3 +86,21 @@ h6 {
   font-weight: bold;
   margin-bottom: 80px;
 }
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.temperaturenow .active {
+  color: rgb(70, 62, 62);
+  cursor: default;
+  text-decoration: none;
+}
+
+.temperaturenow .active:hover {
+  text-decoration: none;
+}

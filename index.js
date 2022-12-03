@@ -69,31 +69,12 @@ function selectCity(response) {
   );
   let dateElement = document.querySelector("#current-time");
   dateElement.innerHTML = formatDate(response.data.dt * 1000);
+
+  celsiusTemperature = response.data.main.temp;
 }
 
 let form = document.querySelector("#city-search");
 form.addEventListener("submit", search);
-
-function changeCel(event) {
-  event.preventDefault();
-  let temperaturecelsius = document.querySelector("#temp-now");
-  temperaturecelsius.innerHTML = 25;
-}
-let tempDegrees = document.querySelector("#centi");
-tempDegrees.addEventListener("click", changeCel);
-
-function changeFar(event) {
-  event.preventDefault();
-  let temperatureElement = document.querySelector("#temp-now");
-  let temperature = temperatureElement.innerHTML;
-  temperatureElement.innerHTML = Math.round((temperature * 9) / 5 + 32);
-}
-
-let temperatureElement = document.querySelector("#temp-now");
-let temperature = temperatureElement.innerHTML;
-
-let tempFaren = document.querySelector("#far");
-tempFaren.addEventListener("click", changeFar);
 
 function showgeoTemp(event) {
   event.preventDefault();
@@ -124,7 +105,35 @@ function showcurrentTemp(response) {
     "src",
     `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
   );
+  celsiusTemperature = response.data.main.temp;
 }
 
 let getcurrentLocation = document.querySelector("#geolocation");
 getcurrentLocation.addEventListener("click", showgeoTemp);
+
+function changeCel(event) {
+  event.preventDefault();
+  let temperaturecelsius = document.querySelector("#temp-now");
+  temperaturecelsius.innerHTML = Math.round(celsiusTemperature);
+  tempDegrees.classList.add("active");
+  tempFaren.classList.remove("active");
+}
+
+function changeFar(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temp-now");
+  let temperature = (celsiusTemperature * 9) / 5 + 32;
+  temperatureElement.innerHTML = Math.round(temperature);
+  tempDegrees.classList.remove("active");
+  tempFaren.classList.add("active");
+}
+let tempDegrees = document.querySelector("#centi");
+tempDegrees.addEventListener("click", changeCel);
+
+let temperatureElement = document.querySelector("#temp-now");
+let temperature = temperatureElement.innerHTML;
+
+let tempFaren = document.querySelector("#far");
+tempFaren.addEventListener("click", changeFar);
+
+let celsiusTemperature = null;
