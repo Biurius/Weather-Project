@@ -73,9 +73,6 @@ function selectCity(response) {
   celsiusTemperature = response.data.main.temp;
 }
 
-let form = document.querySelector("#city-search");
-form.addEventListener("submit", search);
-
 function showgeoTemp(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(showPosition);
@@ -108,9 +105,6 @@ function showcurrentTemp(response) {
   celsiusTemperature = response.data.main.temp;
 }
 
-let getcurrentLocation = document.querySelector("#geolocation");
-getcurrentLocation.addEventListener("click", showgeoTemp);
-
 function changeCel(event) {
   event.preventDefault();
   let temperaturecelsius = document.querySelector("#temp-now");
@@ -127,6 +121,13 @@ function changeFar(event) {
   tempDegrees.classList.remove("active");
   tempFaren.classList.add("active");
 }
+
+let form = document.querySelector("#city-search");
+form.addEventListener("submit", search);
+
+let getcurrentLocation = document.querySelector("#geolocation");
+getcurrentLocation.addEventListener("click", showgeoTemp);
+
 let tempDegrees = document.querySelector("#centi");
 tempDegrees.addEventListener("click", changeCel);
 
