@@ -25,6 +25,30 @@ function search(event) {
   axios.get(`${apiUrl}`).then(selectCity);
 }
 
+function formatDate(timestamp) {
+  let date = new Date(timestamp);
+  let hours = date.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let day = days[date.getDay()];
+
+  return `${day}, ${hours}:${minutes}`;
+}
+
 function selectCity(response) {
   let currentcity = response.data.name;
   let changecity = document.querySelector("#city-now");
@@ -38,6 +62,13 @@ function selectCity(response) {
   let currentmin = Math.round(response.data.main.temp_min);
   let changecurrentmin = document.querySelector("#temp-min");
   changecurrentmin.innerHTML = `${currentmin}`;
+  let iconElement = document.querySelector("#icon");
+  iconElement.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
+  let dateElement = document.querySelector("#current-time");
+  dateElement.innerHTML = formatDate(response.data.dt * 1000);
 }
 
 let form = document.querySelector("#city-search");
@@ -81,10 +112,18 @@ function showcurrentTemp(response) {
   let actualtemp = Math.round(response.data.main.temp);
   let heading = document.querySelector("#temp-now");
   heading.innerHTML = `${actualtemp}`;
+  let dateElement = document.querySelector("#current-time");
+  dateElement.innerHTML = formatDate(response.data.dt * 1000);
 
   let currentcity = response.data.name;
   let changecity = document.querySelector("#city-now");
   changecity.innerHTML = `${currentcity}`;
+
+  let iconElement = document.querySelector("#icon");
+  iconElement.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
 }
 
 let getcurrentLocation = document.querySelector("#geolocation");
